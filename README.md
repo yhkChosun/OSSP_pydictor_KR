@@ -4,3 +4,5 @@ GPL 3.0 라이센스를 따릅니다.
 
 Based on the pydictor, I'll add functions to suit the Korean password pattern.
 Follow the GPL 3.0 license.
+
+original pydictor:  https://github.com/LandGrey/pydictor
