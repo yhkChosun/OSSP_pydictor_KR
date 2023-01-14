@@ -42,7 +42,7 @@ def wordsharker(raw, leet=True):
     # raw word maybe strange case, both not lowercase and uppercase, such as 'myName'
     #
     init_word_res = []
-    raw = str(raw).strip()
+    raw = str(raw).strip()  #raw에 args문자열 중 이름(키워드) 저장됨.
     if not raw:
         return []
     # level {format}
