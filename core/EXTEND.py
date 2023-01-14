@@ -16,6 +16,7 @@ from lib.fun.decorator import magic
 from lib.data.data import paths, pyoptions
 from lib.fun.leetmode import leet_mode_magic
 from lib.fun.fun import cool, walks_all_files, unique, charanger
+from .nameAPI import *	#한영 이름변경 API import
 try:
     import ConfigParser
 except:
@@ -43,6 +44,7 @@ def wordsharker(raw, leet=True):
     #
     init_word_res = []
     raw = str(raw).strip()  #raw에 args문자열 중 이름(키워드) 저장됨.
+    translateName(raw)
     if not raw:
         return []
     # level {format}
