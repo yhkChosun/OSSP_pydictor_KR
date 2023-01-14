@@ -44,73 +44,84 @@ def wordsharker(raw, leet=True):
     #
     init_word_res = []
     raw = str(raw).strip()  #raw에 args문자열 중 이름(키워드) 저장됨.
-    translateName(raw)
-    if not raw:
-        return []
-    # level {format}
-    if pyoptions.level <= 5:
-        # 5 {raw}
-        init_word_res.append(raw)
+    raw2 = translateName(raw)
+    raw2_temp = []
+    for i in range(len(raw2)):
+        raw2_temp += raw2[i].split()
 
-    if pyoptions.level <= 4:
-        # 4 {raw:lowercase}
-        init_word_res.append(raw.lower())
-        # 4 {Raw:capitalize}
-        init_word_res.append(raw.capitalize())
+    raw3 = kor2eng(raw)
+    temp_list = raw2_temp + raw3
+    temp_set = set(temp_list)
+    temp_list = list(temp_set)
+    print(temp_list)
 
-    if pyoptions.level <= 3:
-        # 3 {RAW:uppercase}
-        init_word_res.append(raw.upper())
+    for raw in temp_list:
+        if not raw:
+            return []
+        # level {format}
+        if pyoptions.level <= 5:
+            # 5 {raw}
+            init_word_res.append(raw)
 
-    if pyoptions.level <= 2:
-        # 2 {raw}{raw}
-        init_word_res.append(raw + raw)
-        # 2 {raw:lowercase}{raw:lowercase}
-        init_word_res.append(raw.lower() + raw.lower())
-        # 2 {raw}{RAW:uppercase}
-        init_word_res.append(raw + raw.upper())
-        # 2 {raw:lowercase}{RAW:uppercase}
-        init_word_res.append(raw.lower() + raw.upper())
+        if pyoptions.level <= 4:
+            # 4 {raw:lowercase}
+            init_word_res.append(raw.lower())
+            # 4 {Raw:capitalize}
+            init_word_res.append(raw.capitalize())
 
-    if pyoptions.level <= 1:
-        # 1 {RAW:uppercase}{raw}
-        init_word_res.append(raw.upper() + raw)
-        # 1 {RAW:uppercase}{raw:lowercase}
-        init_word_res.append(raw.upper() + raw.lower())
-        # 1 {r:initials:lowercase}
-        init_word_res.append(raw[0].lower())
-        # 1 {R:initials:uppercase}
-        init_word_res.append(raw[0].upper())
-        # 1 {war:reverse}
-        init_word_res.append(raw[::-1])
-        # 1 {war:reverse:lowercase}
-        init_word_res.append(raw[::-1].lower())
-        # 1 {war:reverse:uppercase}
-        init_word_res.append(raw[::-1].upper())
+        if pyoptions.level <= 3:
+            # 3 {RAW:uppercase}
+            init_word_res.append(raw.upper())
 
-        # 1 {Raw:capitalize}{raw}
-        init_word_res.append(raw.capitalize() + raw)
-        # 1 {Raw:capitalize}{raw:lowercase}
-        init_word_res.append(raw.capitalize() + raw.lower())
-        # 1 {Raw:capitalize}{RAW:uppercase}
-        init_word_res.append(raw.capitalize() + raw.upper())
-        # 1 {Raw:capitalize}{Raw:capitalize}
-        init_word_res.append(raw.capitalize() + raw.capitalize())
-        # 1 {waR:capitalize:reverse}
-        init_word_res.append(raw.capitalize()[::-1])
-        # 1 {raW:reverse:capitalize:reverse}
-        init_word_res.append(raw[::-1].capitalize()[::-1])
-        # 1 {raw}{war:reverse}
-        init_word_res.append(raw + raw[::-1])
-        # 1 {raw}{war:reverse:lowercase}
-        init_word_res.append(raw + raw[::-1].lower())
-        # 1 {raw}{war:reverse:uppercase}
-        init_word_res.append(raw + raw[::-1].upper())
+        if pyoptions.level <= 2:
+            # 2 {raw}{raw}
+            init_word_res.append(raw + raw)
+            # 2 {raw:lowercase}{raw:lowercase}
+            init_word_res.append(raw.lower() + raw.lower())
+            # 2 {raw}{RAW:uppercase}
+            init_word_res.append(raw + raw.upper())
+            # 2 {raw:lowercase}{RAW:uppercase}
+            init_word_res.append(raw.lower() + raw.upper())
 
-    # 1337 mode
-    if leet:
-        for code in pyoptions.leetmode_code:
-            init_word_res.append(leet_mode_magic(raw, code))
+        if pyoptions.level <= 1:
+            # 1 {RAW:uppercase}{raw}
+            init_word_res.append(raw.upper() + raw)
+            # 1 {RAW:uppercase}{raw:lowercase}
+            init_word_res.append(raw.upper() + raw.lower())
+            # 1 {r:initials:lowercase}
+            init_word_res.append(raw[0].lower())
+            # 1 {R:initials:uppercase}
+            init_word_res.append(raw[0].upper())
+            # 1 {war:reverse}
+            init_word_res.append(raw[::-1])
+            # 1 {war:reverse:lowercase}
+            init_word_res.append(raw[::-1].lower())
+            # 1 {war:reverse:uppercase}
+            init_word_res.append(raw[::-1].upper())
+
+            # 1 {Raw:capitalize}{raw}
+            init_word_res.append(raw.capitalize() + raw)
+            # 1 {Raw:capitalize}{raw:lowercase}
+            init_word_res.append(raw.capitalize() + raw.lower())
+            # 1 {Raw:capitalize}{RAW:uppercase}
+            init_word_res.append(raw.capitalize() + raw.upper())
+            # 1 {Raw:capitalize}{Raw:capitalize}
+            init_word_res.append(raw.capitalize() + raw.capitalize())
+            # 1 {waR:capitalize:reverse}
+            init_word_res.append(raw.capitalize()[::-1])
+            # 1 {raW:reverse:capitalize:reverse}
+            init_word_res.append(raw[::-1].capitalize()[::-1])
+            # 1 {raw}{war:reverse}
+            init_word_res.append(raw + raw[::-1])
+            # 1 {raw}{war:reverse:lowercase}
+            init_word_res.append(raw + raw[::-1].lower())
+            # 1 {raw}{war:reverse:uppercase}
+            init_word_res.append(raw + raw[::-1].upper())
+
+        # 1337 mode
+        if leet:
+            for code in pyoptions.leetmode_code:
+                init_word_res.append(leet_mode_magic(raw, code))
 
     return unique(init_word_res)
 
