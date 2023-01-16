@@ -16,6 +16,7 @@ from lib.fun.decorator import magic
 from lib.data.data import paths, pyoptions
 from lib.fun.leetmode import leet_mode_magic
 from lib.fun.fun import cool, walks_all_files, unique, charanger
+from .korTOeng import * #한영 키보드 매핑
 from .nameAPI import *	#한영 이름변경 API import
 try:
     import ConfigParser
