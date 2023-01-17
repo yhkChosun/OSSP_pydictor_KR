@@ -17,29 +17,30 @@ def kor2eng(text):
     mlName = ''  # 이름이 저장되는 변수
     count = 0
     for ch in text:
-        word_split = split(ch)  # 튜플 spl에 각각 한글자씩 잘라서 넣는다. ex) 윤형근 --> 윤, 형, 근
+        word_split = split(ch)  # 튜플 word_split에 각각 한글자씩 잘라서 넣는다. ex) 윤형근 --> 윤, 형, 근
         if word_split is None:  # 예외처리
             fullName += ch
         else:
             for i in range(len(word_split)):
                 num = KORS.index(word_split[i])
-                fullName += ENGS[num]   # 풀네임 저장
+                fullName += ENGS[num]  # 풀네임 저장
                 if count == 0:
                     firstName += ENGS[num]  # 성씨 저장
                 else:
-                    mlName += ENGS[num] # 이름 저장
+                    mlName += ENGS[num]  # 이름 저장
         count += 1
-        nameList = [fullName, firstName, mlName]    # 풀네임, 성씨, 이름으로 리스트 구성
-    return nameList     #리스트 반환, EXTEND.py에서 받아서 사용함.
+        nameList = [fullName, firstName, mlName]  # 풀네임, 성씨, 이름으로 리스트 구성
+    return nameList  # 리스트 반환, EXTEND.py에서 받아서 사용함.
 
 
+# split 메소드는 각각 한글 문자로 영어로 대응시키는 함수. 대응시에 초성, 중성, 종성 리스트를 사용한다.
 def split(kor):
-    code = ord(kor) - BASE_CODE
-    if code < 0 or code > MAX_CODE - BASE_CODE:
+    code = ord(kor) - BASE_CODE  # BASE_CODE는 한글의 유니코드인 44032로 선언함.
+    if code < 0 or code > MAX_CODE - BASE_CODE:  # 한글 문자의 범위
         if kor == ' ': return None
-        if kor in CHO_LIST: return kor, ' ', ' '
-        if kor in JUNG_LIST: return ' ', kor, ' '
-        if kor in JONG_LIST: return ' ', ' ', kor
+        if kor in CHO_LIST: return kor, ' ', ' '    # 초성
+        if kor in JUNG_LIST: return ' ', kor, ' '   # 중성
+        if kor in JONG_LIST: return ' ', ' ', kor   # 종성
         return None
     return CHO_LIST[code // CHO_CODE], JUNG_LIST[(code % CHO_CODE) // JUNG_CODE], JONG_LIST[
-        (code % CHO_CODE) % JUNG_CODE]
+        (code % CHO_CODE) % JUNG_CODE]  # 초성, 중성, 종성의 리스트를 리턴한다.
