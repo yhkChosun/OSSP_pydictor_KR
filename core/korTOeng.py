@@ -4,39 +4,33 @@ JUNG_LIST = list('ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢ�
 JONG_LIST = list(' ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ')
 
 KORS = list('ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎㄳㄵㄶㄺㄻㄼㄽㄾㄿㅀㅄㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ ')
-ENGS = ['r', 'R', 's', 'e', 'E', 'f', 'a', 'q', 'Q', 't', 'T', 'd', 'w', 'W', 'c', 'z', 'x', 'v', 'g', 'rt', 'sw', 'sg', 'fr', 'fa', 'fq', 'ft', 'fx', 'fb', 'fh', 'qt', 'k', 'o', 'i', 'O', 'j', 'p', 'u', 'P', 'h', 'hk', 'ho', 'hl', 'y', 'n', 'nj', 'np', 'nl', 'b', 'm', 'ml', 'l', '']
+ENGS = ['r', 'R', 's', 'e', 'E', 'f', 'a', 'q', 'Q', 't', 'T', 'd', 'w', 'W', 'c', 'z', 'x', 'v', 'g', 'rt', 'sw', 'sg',
+        'fr', 'fa', 'fq', 'ft', 'fx', 'fb', 'fh', 'qt', 'k', 'o', 'i', 'O', 'j', 'p', 'u', 'P', 'h', 'hk', 'ho', 'hl',
+        'y', 'n', 'nj', 'np', 'nl', 'b', 'm', 'ml', 'l', '']
 KOR_ENG_TABLE = dict(zip(KORS, ENGS))
 
 
-
+# kor2eng 메소드는 한글 이름 데이터를 영문 타자 데이터로 대응시키고, 추가로 해당 이름 데이터를 '성씨'와 '이름'으로 나눈다.
 def kor2eng(text):
-    fullName = ''
-    firstName = ''
-    mlName = ''
+    fullName = ''  # 풀네임이 저장되는 변수
+    firstName = ''  # 성씨가 저장되는 변수
+    mlName = ''  # 이름이 저장되는 변수
     count = 0
     for ch in text:
-        spl = split(ch)
-        print(ch)
-        print(type(spl))
-        #print(spl[1])
-        if spl is None:
+        word_split = split(ch)  # 튜플 spl에 각각 한글자씩 잘라서 넣는다. ex) 윤형근 --> 윤, 형, 근
+        if word_split is None:  # 예외처리
             fullName += ch
         else:
-            #res += ''.join([v for v in spl if v != ' '])
-            for i in range(len(spl)):
-                num = KORS.index(spl[i])
-                fullName += ENGS[num]
-                if(count == 0):
-                    firstName += ENGS[num]
+            for i in range(len(word_split)):
+                num = KORS.index(word_split[i])
+                fullName += ENGS[num]   # 풀네임 저장
+                if count == 0:
+                    firstName += ENGS[num]  # 성씨 저장
                 else:
-                    mlName += ENGS[num]
+                    mlName += ENGS[num] # 이름 저장
         count += 1
-
-
-        #print(res)
-        nameList = [fullName, firstName, mlName]
-    return nameList
-
+        nameList = [fullName, firstName, mlName]    # 풀네임, 성씨, 이름으로 리스트 구성
+    return nameList     #리스트 반환, EXTEND.py에서 받아서 사용함.
 
 
 def split(kor):
@@ -47,8 +41,5 @@ def split(kor):
         if kor in JUNG_LIST: return ' ', kor, ' '
         if kor in JONG_LIST: return ' ', ' ', kor
         return None
-    return CHO_LIST[code // CHO_CODE], JUNG_LIST[(code % CHO_CODE) // JUNG_CODE], JONG_LIST[(code % CHO_CODE) % JUNG_CODE]
-
-
-if __name__ == '__main__':
-    print(kor2eng('윤형근'))
+    return CHO_LIST[code // CHO_CODE], JUNG_LIST[(code % CHO_CODE) // JUNG_CODE], JONG_LIST[
+        (code % CHO_CODE) % JUNG_CODE]
