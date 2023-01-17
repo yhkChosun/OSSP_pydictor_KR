@@ -44,19 +44,20 @@ def wordsharker(raw, leet=True):
     # raw word maybe strange case, both not lowercase and uppercase, such as 'myName'
     #
     init_word_res = []
-    raw = str(raw).strip()  #raw에 args문자열 중 이름(키워드) 저장됨.
-    raw2 = translateName(raw)
+    raw = str(raw).strip()  #raw에 args문자열 중 이름(한글) 저장됨.
+    raw2 = translateName(raw)   #raw에 저장된 이름(한글)을 nameAPI를 이용해 다양한 경우의 영문이름으로 변환 후 raw2에 저장
+
+    #변환한 이름들을 성과 이름으로 분리, raw2_temp에 저장
     raw2_temp = []
     for i in range(len(raw2)):
         raw2_temp += raw2[i].split()
 
-    raw3 = kor2eng(raw)
-    temp_list = raw2_temp + raw3
-    temp_set = set(temp_list)
-    temp_list = list(temp_set)
-    print(temp_list)
+    raw3 = kor2eng(raw) #raw에 저장된 이름(한글)을 영타로 변환 후 raw3에 저장 (ex- 김철수 --> rlacjftn )    # korTOeng.py에 존재하는 함수 이용
+    temp_list = raw2_temp + raw3    #temp_list에 raw2_temp와 raw3의 결과 통합
+    temp_set = set(temp_list)   #리스트 내의 중복 데이터 제거 과정 1
+    temp_list = list(temp_set)  #리스트 내의 중복 데이터 제거 과정 2
 
-    for raw in temp_list:
+    for raw in temp_list:   #각각의 테이블 생성 알고리즘을 위에서 만든 temp_list 전체에 대해 수행하도록 수정함. (모든 한글이름 경우의 수에 대하여 수행)
         if not raw:
             return []
         # level {format}
